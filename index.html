@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html>    
+    <head>    
+        <title>Block de notas </title>    
+    
+        <link rel="stylesheet" type="text/css"  href="{{ url_for('static',filename='css/styles.css')}}" >
+        <script src="{{ url_for('static',filename='assets/twemoji.min.js')}}"></script>      
+        <script src="{{ url_for('static',filename='assets/emoji.js')}}"></script>    
+
+        <style>
+
+            h1{    
+            /*  font-family:"Arial Black", Gadget, sans-serif;*/    
+                font-family:"Times New Romans", Gadget, sans-serif;    
+            }    
+            body{    
+                color:blue;    
+                background-color:beige;    
+                left-margin:5px;    
+                right-margin:10px; 
+                text-align:center;   
+            }    
+            table{    
+                width:100%;    
+                border: solid 1px black;    
+                table-layout:fixed; 
+                font-size:14px;   
+            }    
+            td    
+            {   font-size: 14px; 
+                border: rgba(224, 119, 70, 1) 1px solid;    
+                word-wrap:break-word;    
+                margin: 1px;
+            }    
+            table#close{    
+                
+                table-layout:default;    
+                border-collapse:seperate;    
+                border-spacing: 3px 3px;    
+                border:none;    
+                vertical-align:top;  
+                font-size:10px;  
+            }    
+            table.none    
+            {    
+                border:none;    
+                vertical-align:top; 
+                color: orange;   
+            }    
+            table.none td    
+            {    
+                border: solid orange 2px; 
+                padding:2px;
+                margin: 1px;   
+            }    
+            tr.row td{    
+                text-decoration:italic;   
+                color:red; 
+            }    
+            th.status{    
+                width:5%;    
+            }    
+            th.name{    
+                width:12%;    
+            }    
+            th.des{    
+                width:15%;    
+                padding:5px 5px 5px 5px;    
+            }    
+            th.date{    
+                width:12%;    
+            }    
+            th.pr{    
+                width:30%;    
+            }    
+            th.func1{    
+            width:12%;    
+            }    
+            th.func2{    
+            width:15%;    
+            }    
+            input[type=submit] {    
+                width: 20em;  height: 2em;    
+            }    
+            ul {    
+                list-style-type: none;    
+            margin: 0;    
+            padding: 0;    
+            overflow: hidden;    
+            background-color: #333;    
+            }    
+            li {    
+                float: left;    
+            }    
+            li a {    
+                display: block;    
+                color: white;    
+            text-align: center;    
+            padding: 14px 16px;    
+            text-decoration: none;    
+            }    
+
+            input{
+                width:80px;
+            }
+            a.active {    
+            background-color: #4CAF50;    
+            }    
+            /* Change the link color to #111 (black) on hover */    
+            li a:hover {    
+                background-color: yellow;    
+            } 
+
+            img.emoji {      
+            // Override any img styles to ensure Emojis are displayed inline      
+            margin: 0px !important;      
+            display: inline !important;      
+            } 
+
+            #video-background {
+                height: 55%;
+                position: fixed;
+                width: 55%;
+                z-index: -100;
+                padding: 5px;
+            } 
+
+            * {
+                    margin: 5px;
+                    padding: 5px;
+                }
+
+            #content {
+                background: #fff  ; /* Para Internet Explorer */
+                background: rgba(255,255,255,.5)  ;
+                border-radius: 10px;
+                box-shadow: 5px 5px 10px rgb(200,200,200)  ;
+                font-size: 2rem;
+                margin: 0 auto;
+                padding: 50px 0;
+                text-align: center;
+                text-shadow: 2px 2px 4px rgb(255, 255, 255)  ;
+                width: 100%;
+            }
+
+            #foo {
+                display: none;
+                position: absolute;
+                top: 20%;               
+                width: 100%;
+            }
+
+        </style>
+       <!-- <script>
+      alert('BLOCK DE NOTAS CREADO POR DANY PAEZ')
+        
+       
+
+    </script>  -->
+    </head>    
+<body>    
+
+ <!--<iframe id="video-background" width="1200" height="900" src="https://www.youtube.com/embed/xFb_JXm-9pE"  allow="accelerometer; autoplay preload muted"></iframe>-->
+
+    <img id= "video-background"   src="static/bandera.jpg" alt="Mi imagen de prueba">
+
+    <ul>    
+        <li><a href="/list" class="{{ a1 }}">todos</a></li>    
+        <li><a href="/" class="{{ a2 }}">Incompleto</a></li>    
+        <li><a href="/completed" class="{{ a3 }}">Completo</a></li>    
+    </ul>    
+    <hr>  
+    <img src="static/no.png" alt="Mi imagen de prueba">
+
+    {% if todos[0] %}    
+    <div span="right">    
+    <form action="/search"   method="GET" >    
+        <table class="none" id="close">    
+        <tr>    
+        <td></td><td><e/td>    
+        <td><big><b> Criterios de busqueda :</b></big></td> 
+        <!--lista desplegable-->   
+        <td><select name="usuario" required>    
+            <option value="usuario">Usuario</option>    
+            <option value="email">Email</option>    
+            <option value="telefono">telefono</option>    
+            <option value="notas">notas</option>    
+        </select></td>    
+        <td><input type="text" name="key" placeholder="Buscar Usuario" size="15" /></td>    
+        <td><button type="submit">buscar</button></td>    
+        </tr>    
+        </table>    
+    </form>    
+    </div>    
+    <b><big>Lista de Notas :</big></b>    
+    <table>    
+        <tr id="row">    
+            <!--TITULO TABLA USUARIOS-->
+            <th class="usuario">usuario</th>    
+            <th class="email">mail</th>    
+            <th class="telefono">tel.</th>    
+            <th class="notas">descripcion</th>    
+        <th class="func1">Borrar</th>    
+        <th class="func2">Modicar</th>    
+        </tr>    
+    {% for todo in todos %}    
+        <tr class="datas">    
+          <!--<td><a href="./done?_id={{ todo['_id'] }}"><input type="image" src="static/noo.png" alt="Sub" image-size: 10px; ></a></td>   --> 
+            <td class="usuario">{{ todo["usuario"] }}</td>    
+            <td class="email">{{ todo["email"] }}</td>    
+            <td class="telefono">{{ todo["telefono"] }}</td>    
+            <td class="notas">{{ todo["notas"] }}</td>    
+            <td class="func1"><a href="./remove?_id={{ todo['_id'] }}"><button type="submit">Borrar</button></a></td>    
+            <td class="func1"><a href="./update?_id={{ todo['_id'] }}"><button type="submit">editar</button></a></td>    
+        </tr>    
+    {% endfor %}    
+    </table>    
+    {% else %}    
+    <h4>No Tasks in the List !!</h4>    
+    {% endif %}    
+    <hr/>    
+    <form action="/action" method="POST">    
+    <table class="none">    
+        <tr>    
+            <td><b><big><label>Agregar Usuario : </label></big></b></td>    
+        </tr>    
+        <tr> 
+        <!--PREHOLDER NUEVOS USUARIOS-->   
+        <td><input type="text" name="usuario"  placeholder="USUARIO" ></td>    
+        <td><textarea name="email" rows="1" cols="15" placeholder="MAIL" required></textarea></td>    
+        <td><input type="text" name="telefono" placeholder="TELEFONO" cols="10"></td>    
+        <td><input type="text" name="notas" placeholder="NOTAS" /></td>    
+        <td><button type="submit"> Crear </button></td>    
+        </tr>    
+    </form>    
+    </table>    
+    <script>    
+        
+    </script> 
+
+    <!-- Búsqueda Google -->
+<center>
+<FORM method=GET action="http://www.google.com/search">
+<TABLE bgcolor="#FFFFFF"><tr><td>
+<A HREF="http://www.google.com/">
+<IMG SRC="http://www.google.com/logos/Logo_40wht.gif" border="0" ALT="Google" align="absmiddle"></A>
+<INPUT TYPE=text name=q size=31 maxlength=255 value="">
+<INPUT TYPE=hidden name=hl value=es>
+<INPUT type=submit name=btnG VALUE="Búsqueda Google">
+</td></tr></TABLE>
+</FORM>
+</center>
+<!-- Búsqueda Google -->   
+</body>    
+</html>     

@@ -1,0 +1,38 @@
+<html>    
+    <head>    
+        <title>{{t}}</title>    
+        <link rel="stylesheet" type="text/css"  href="{{ url_for('static',filename='css/styles.css')}}" >    
+    </head>    
+<body>    
+    <h1>{{h}}</h1>    
+    <hr>    
+        {% if todos[0] %}    
+    <h3>Resultado de la busqueda: </h3>    
+    <table>    
+        <tr id="row">    
+              
+            <td class="usuario">Usuario</td>    
+            <td class="email"> email</td>    
+            <td class="telefono">telefono</td>    
+            <td class="notas">notas</td>    
+        <td class="func">Borrar</td>    
+        <td class="func">Modicar</td>    
+        </tr>    
+        {% for todo in todos %}    
+        <tr class="datas">    
+            <td><a href="./done?_id={{ todo['_id'] }}"><input type="image" src="static/images/{{todo['done']}}.png" alt="Submit ME"></a></td>    
+            <td class="usuario">{{ todo["usuario"] }}</td>    
+            <td class="email">{{ todo["email"] }}</td>    
+            <td class="telefono">{{ todo["telefono"] }}</td>    
+            <td class="notas">{{ todo["notas"] }}</td>    
+            <td class="func1"><a href="./remove?_id={{ todo['_id'] }}"><button type="submit">DELETE</button></a></td>    
+            <td class="func1"><a href="./update?_id={{ todo['_id'] }}"><button type="submit">EDIT</button></a></td>    
+        </tr>    
+        {% endfor %}    
+    {% else %}    
+        <h4>No Result Found !!</h4>    
+    {% endif %}    
+    </table>    
+   <a href="/">volver listado de notas</a>    
+</body>    
+</html>  
